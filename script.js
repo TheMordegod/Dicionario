@@ -57,12 +57,12 @@ function createPhonetics(phonetics)
         //cria o botão com a imagem
         let buttonNode = document.createElement("button")
         buttonNode.appendChild(imageNode) //add a imagem no botão
-        buttonNode.onclick = function() {playMusic(array[index].audio)} // função para adicionar Som ao Botão
+        buttonNode.onclick = function() {playAudio(array[index].audio)} // função para adicionar Som ao Botão
         document.getElementById("wordPhonetics").appendChild(buttonNode)          
     })
 }
 
-function playMusic(url)
+function playAudio(url)
 {   
   let audio = new Audio(url)
   audio.pause()
