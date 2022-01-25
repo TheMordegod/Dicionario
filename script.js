@@ -1,39 +1,90 @@
-function search(word)
-{
+//document.getElementById("searchBtn").addEventListener("Click", search())
+
+function search()
+{  
+    let word = document.getElementById("searchBar").value
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
     .then((resp) => resp.json())
     .then((data) => {printQuery(data)})
-    .catch(error => console.log(error)) 
+    .catch(error => errorLog(error)) 
 }
 
-function append(parent, element){
-    return parent.appendChild(element)
+function errorLog(error)
+{
+    let errorText = "OOPS! Something went wrong! \n" + error
+    document.getElementById("wordText").innerHTML = errorText
 }
 
-function createNode(element){
-    return document.createElement(element)
-}
-
-function display(element){
-    return document.getElementById("demo").innerHTML = element
-}
-
-function printQuery()
+function printQuery(test)
 { 
-    let test = [{"word":"car","phonetic":"kɑː",
-    "phonetics":[{"text":"kɑː",
-    "audio":"//ssl.gstatic.com/dictionary/static/sounds/20200429/car--_gb_1.mp3"}],
-    "origin":"late Middle English (in the general sense ‘wheeled vehicle’): from Old Northern French carre, based on Latin carrum, carrus, of Celtic origin.",
-    "meanings":[{"partOfSpeech":"noun","definitions":[{"definition":"a four-wheeled road vehicle that is powered by an engine and is able to carry a small number of people.",
-    "example":"she drove up in a car","synonyms":["automobile","motor","machine","wheels","heap","crate","(old) banger","jalopy","limo","auto","hooptie","motor car","horseless carriage"],
-    "antonyms":[]}]}]}]
-    
+    //Word Result Principal:
+    document.getElementById("wordText").innerHTML = test[0].word
+    document.getElementById("wordTypeText").innerHTML = test[0].meanings[0].partOfSpeech
+    createPhonetics(test[0].phonetics)
+    //Word Description:
+    document.getElementById("descriptionText").innerHTML = test[0].meanings[0].definitions[0].definition
+    //Word Origin:
+    document.getElementById("originText").innerHTML =  test[0].origin
+    //Word Exemples:
+    document.getElementById("exempleText").innerHTML = test[0].meanings[0].definitions[0].example
+    //Word Synonyms:
+    createSynonyms(test[0].meanings[0].definitions[0].synonyms)
+}
 
+function clearNodeChilds(nodeName)
+{
+    let list = document.getElementById(nodeName)
+    while(list.hasChildNodes()){
+        list.removeChild(list.firstChild)
+    }
+}
 
-    
-    console.log(test[0].word)
-    console.log(test[0].origin)
-    console.log(test[0].phonetic)
-    console.log(test[0].meanings)
-    console.log(test[0].phonetics)
+function createPhonetics(phonetics)
+{   
+    clearNodeChilds("wordPhonetics")
+    phonetics.forEach((value,index,array) => 
+    {
+        //cria o texto de pronuncia
+        let textNode = document.createElement("span")
+        textNode.appendChild(document.createTextNode(array[index].text))
+        document.getElementById("wordPhonetics").appendChild(textNode)
+
+        //cria a tag de imagem
+        let imageNode = document.createElement("img")
+        imageNode.src = "./icons/volume-up.svg"
+        imageNode.alt = "Hear the Pronounce" 
+        
+        //cria o botão com a imagem
+        let buttonNode = document.createElement("button")
+        buttonNode.appendChild(imageNode) //add a imagem no botão
+        buttonNode.onclick = function() {playMusic(array[index].audio)} // função para adicionar Som ao Botão
+        document.getElementById("wordPhonetics").appendChild(buttonNode)          
+    })
+}
+
+function playMusic(url)
+{   
+  let audio = new Audio(url)
+  audio.pause()
+  audio.play()
+}
+
+// limpa a lista anterior e adiciona os novos elementos
+function createSynonyms(synonyms)
+{
+    clearNodeChilds("synonymsList")
+
+    if(synonyms.length > 0){
+        synonyms.forEach((value) => {
+            let node = document.createElement("li") // cria a tag
+            node.appendChild(document.createTextNode(value)) // add o valor dentro da tag 
+            document.getElementById("synonymsList").appendChild(node) // add o <li> valor </li> na pag
+        })
+    }
+    else{
+        let node = document.createElement("li")
+        node.appendChild(document.createTextNode("No synonyms found!"))
+        document.getElementById("synonymsList").appendChild(node)
+    }
+
 }
