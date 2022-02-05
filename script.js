@@ -12,18 +12,30 @@ async function search()
             printQuery(result)
         }catch(error){
             errorLog(error)
-        }
+       }
     }
     else{errorLog("", "The input is empty!")}
+}
+
+function divCreator(divId, appendTo, message)
+{
+    let divName = document.createElement('div')
+    divName.id = divId 
+    document.getElementById(appendTo).appendChild(divName)
+    divName.appendChild(document.createTextNode(message))
+}
+
+function textAppend(elementType, appendTo, text)
+{
+    let element = document.createElement(elementType)
+    document.getElementById(appendTo).appendChild(element)
+    element.appendChild(document.createTextNode(text))  
 }
 
 function loading()
 {
     clearNodeChilds("wordResult")
-    let loadingDiv = document.createElement('div')
-    loadingDiv.id = "loadingDiv"
-    document.getElementById("wordResult").appendChild(loadingDiv)
-    loadingDiv.appendChild(document.createTextNode("Loading..."))
+    divCreator("loadingDiv","wordResult","Loading...")
 }
 
 function clearNodeChilds(nodeName)
@@ -37,17 +49,8 @@ function clearNodeChilds(nodeName)
 function errorLog(error, message)
 {
     clearNodeChilds("wordResult")
-
-    let errorDiv = document.createElement("div")
-    let errorText = document.createElement('p')
-
-    errorDiv.id = "errorDiv"
-    errorDiv.appendChild(errorText)
-    errorText.appendChild(document.createTextNode(message + error))
-
+    divCreator("errorDiv", "wordResult", message + error)
     console.log(error)
-
-    document.getElementById("wordResult").appendChild(errorDiv)
 }
 
 function printQuery(word)
@@ -58,13 +61,7 @@ function printQuery(word)
     {
         let msg = [word.title, word.message, word.resolution]
         let random = Math.floor(Math.random() * 2)
-
-
-        let notFoundDiv = document.createElement('div')
-        notFoundDiv.id = "notFoundDiv"
-        document.getElementById("wordResult").appendChild(notFoundDiv)
-
-        notFoundDiv.appendChild(document.createTextNode(msg[random]))
+        divCreator("notFoundDiv","wordResult",msg[random])
     }
     else{        
         //Word Result Principal:
@@ -80,19 +77,11 @@ function printQuery(word)
 function createWordResult(term)
 {
     //Create the word result main
-    let wordResultDiv = document.createElement('div')
-    wordResultDiv.id = "wordResultPrincipal"
-    document.getElementById("wordResult").appendChild(wordResultDiv)
-
-    //Create the searched word
-    let word = document.createElement('p')
-    word.appendChild(document.createTextNode("Word: " + term.word))
-    document.getElementById("wordResultPrincipal").appendChild(word)
-    
+    divCreator("wordResultPrincipal","wordResult", "")
+    //Create searched word
+    textAppend('p',"wordResultPrincipal","Word: " + term.word)
     //Create the type of word
-    let type = document.createElement('p')
-    type.appendChild(document.createTextNode("type: " + term.meanings[0].partOfSpeech))
-    document.getElementById("wordResultPrincipal").appendChild(type)
+    textAppend('p', 'wordResultPrincipal', "type: " + term.meanings[0].partOfSpeech)
 }
 
 function createPhonetics(phonetics)
@@ -100,9 +89,7 @@ function createPhonetics(phonetics)
     phonetics.forEach((value,index,array) => 
     {
         //cria o texto de pronuncia
-        let textNode = document.createElement("span")
-        textNode.appendChild(document.createTextNode(array[index].text))
-        document.getElementById("wordResultPrincipal").appendChild(textNode)
+        textAppend('span', "wordResultPrincipal", "Pronounce: " + array[index].text)
 
         //cria a tag de imagem
         let imageNode = document.createElement("img")
@@ -127,33 +114,20 @@ async function playAudio(url)
 function createWordMeanings(term)
 {
     // Create the div for meaning
-    let wordMeaningDiv = document.createElement('div')
-    wordMeaningDiv.id = "wordMeaning"
-    document.getElementById("wordResult").appendChild(wordMeaningDiv)
-
+    divCreator("wordMeaning","wordResult", "")
     //Create description text
-    let description = document.createElement('p')
-    description.appendChild(document.createTextNode("Description: " + term.meanings[0].definitions[0].definition))
-    document.getElementById("wordMeaning").appendChild(description)
-
+    textAppend('p',"wordMeaning","Description: " + term.meanings[0].definitions[0].definition)
     //Create Origin text
-    let originText = document.createElement("p")
-    originText.appendChild(document.createTextNode("Origin: " + term.origin))
-    document.getElementById("wordMeaning").appendChild(originText)
-
+    textAppend('p','wordMeaning', "Origin: " + term.origin) 
     //Create exemple text
-    let exempleText = document.createElement('p')
-    exempleText.appendChild(document.createTextNode("Exemple: " + term.meanings[0].definitions[0].example))
-    document.getElementById("wordMeaning").appendChild(exempleText)
+    textAppend('p','wordMeaning', "Exemple: " + term.meanings[0].definitions[0].example)
 }
 
 // limpa a lista anterior e adiciona os novos elementos
 function createSynonyms(synonyms)
 {
-    let synonymsDiv = document.createElement('div')
-    synonymsDiv.id = "WordSynonyms"
-    document.getElementById("wordResult").appendChild(synonymsDiv)
-
+    divCreator('WordSynonyms', 'wordResult', "")
+    
     let list = document.createElement('ul')
     list.appendChild(document.createTextNode('Synonyms:'))
     list.id = "synonymsList"
@@ -161,15 +135,11 @@ function createSynonyms(synonyms)
 
     if(synonyms.length > 0){
         synonyms.forEach((value) => {
-            let node = document.createElement("li") // cria a tag
-            node.appendChild(document.createTextNode(value)) // add o valor dentro da tag 
-            document.getElementById("synonymsList").appendChild(node) // add o <li> valor </li> na pag
+            textAppend('li',"synonymsList",value)
         })
     }
     else{
-        let node = document.createElement("li")
-        node.appendChild(document.createTextNode("No synonyms found!"))
-        document.getElementById("synonymsList").appendChild(node)
+        textAppend('li',"synonymsList", "No synonyms found!")
     }
 
 }
