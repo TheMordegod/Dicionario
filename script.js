@@ -1,43 +1,34 @@
-class FetchApi{
-
-    inputCheck()
-    {
-        const word = document.getElementById("searchBar").value;
-        word === "" ? 
-        errorLog("", "You cannot search with empty inputs.") : 
-        search(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-    }
-
+ class FetchApi
+{
     async search(link)
     {  
         try{
-        loading();
             const response = await fetch(link);        
             const result = await response.json();
-            return result;
+            return result
         }catch(error){
-            errorLog(error);           
+            CreateContent.errorLog(error);           
         }
     }
 }
 
 class DomUtil
 {
-    divCreator(divId, appendTo)
+    static divCreator(divId, appendTo)
     {
         let divName = document.createElement('div');
         divName.id = divId;
         document.getElementById(appendTo).appendChild(divName);
     }
 
-    textAppend(elementType, appendTo, text)
+    static textAppend(elementType, appendTo, text)
     {
         let element = document.createElement(elementType);
         document.getElementById(appendTo).appendChild(element);
         element.appendChild(document.createTextNode(text));  
     }
 
-    clearNodeChilds(nodeName)
+    static clearNodeChilds(nodeName)
     {
         let list = document.getElementById(nodeName);
         while(list.hasChildNodes()) {
@@ -45,7 +36,7 @@ class DomUtil
         }
     }
 
-    playAudio(url) {   
+    static playAudio(url) {   
        let audio = new Audio(url);
        audio.pause();
        audio.play();
@@ -54,52 +45,49 @@ class DomUtil
 
 class CreateContent
 {
-
-    constructor(word)
-
     loading()
     {  
-        clearNodeChilds("wordResult");
-        divCreator("loadingDiv", "wordResult");
-        textAppend('p', 'loadingDiv', "Loading...");
+        DomUtil.clearNodeChilds("wordResult");
+        DomUtil.divCreator("loadingDiv", "wordResult");
+        DomUtil.textAppend('p', 'loadingDiv', "Loading...");
     }
 
-    errorLog(error, message)
+    static errorLog(error, message)
     {
-        clearNodeChilds("wordResult");
-        divCreator("errorDiv", "wordResult");
-        textAppend('p', 'wordResult', message + error);
+        DomUtil.clearNodeChilds("wordResult");
+        DomUtil.divCreator("errorDiv", "wordResult");
+        DomUtil.textAppend('p', 'wordResult', message + error);
     }
 
     printQuery(word)
     { 
-        clearNodeChilds("wordResult");
+        DomUtil.clearNodeChilds("wordResult");
 
         if(word.hasOwnProperty('title')) {
             let msg = [word.title, word.message, word.resolution];
-            let random = Math.floor(Math.random() * 2);
-            divCreator("notFoundDiv", "wordResult");
-            textAppend('p', "notFoundDiv", msg[random]);
+            let random = Math.floor(Math.random() * 3);
+            DomUtil.divCreator("notFoundDiv", "wordResult");
+            DomUtil.textAppend('p', "notFoundDiv", msg[random]);
         }
         else {        
             //Word Result Principal:
-            createWordResult(word[0]);
-            createPhonetics(word[0].phonetics);
+            this.createWordResult(word[0]);
+            this.createPhonetics(word[0].phonetics);
             //Word Meanings:
-            createWordMeanings(word[0]);
+            this.createWordMeanings(word[0]);
             //Word Synonyms:
-            createSynonyms(word[0].meanings[0].definitions[0].synonyms);
+            this.createSynonyms(word[0].meanings[0].definitions[0].synonyms);
         }
     }
 
     createWordResult(term)
     {
         //Create the word result main
-        divCreator("wordResultPrincipal","wordResult");
+        DomUtil.divCreator("wordResultPrincipal","wordResult");
         //Create searched word
-        textAppend('p',"wordResultPrincipal","Word: " + term.word);
+        DomUtil.textAppend('p',"wordResultPrincipal","Word: " + term.word);
         //Create the type of word
-        textAppend('p', 'wordResultPrincipal', "type: " + term.meanings[0].partOfSpeech);
+        DomUtil.textAppend('p', 'wordResultPrincipal', "type: " + term.meanings[0].partOfSpeech);
     }   
 
     createPhonetics(phonetics)
@@ -107,7 +95,7 @@ class CreateContent
         phonetics.forEach((value,index,array) => 
         {
             //cria o texto de pronuncia
-            textAppend('span', "wordResultPrincipal", "Pronounce: " + array[index].text);
+            DomUtil.textAppend('span', "wordResultPrincipal", "Pronounce: " + array[index].text);
 
             //cria a tag de imagem
             let imageNode = document.createElement("img");
@@ -118,7 +106,7 @@ class CreateContent
             let buttonNode = document.createElement("button");
             buttonNode.appendChild(imageNode);
             buttonNode.onclick = function() {
-                playAudio(array[index].audio)
+                DomUtil.playAudio(array[index].audio)
             };
             document.getElementById("wordResultPrincipal").appendChild(buttonNode);          
         })
@@ -126,18 +114,18 @@ class CreateContent
 
     createWordMeanings(term)
     {
-        divCreator("wordMeaning", "wordResult");
+        DomUtil.divCreator("wordMeaning", "wordResult");
         //Create description text
-        textAppend('p', "wordMeaning", "Description: " + term.meanings[0].definitions[0].definition);
+        DomUtil.textAppend('p', "wordMeaning", "Description: " + term.meanings[0].definitions[0].definition);
         //Create Origin text
-        textAppend('p','wordMeaning', "Origin: " + term.origin);
+        DomUtil.textAppend('p','wordMeaning', "Origin: " + term.origin);
         //Create exemple text
-        textAppend('p','wordMeaning', "Exemple: " + term.meanings[0].definitions[0].example);
+        DomUtil.textAppend('p','wordMeaning', "Exemple: " + term.meanings[0].definitions[0].example);
     }
 
     createSynonyms(synonyms)
     {
-        divCreator('WordSynonyms', 'wordResult');
+        DomUtil.divCreator('WordSynonyms', 'wordResult');
 
         let list = document.createElement('ul');
         list.appendChild(document.createTextNode('Synonyms:'));
@@ -146,13 +134,31 @@ class CreateContent
 
         if(synonyms.length > 0) {
             synonyms.forEach((value) => {
-                textAppend('li', "synonymsList", value);
+                DomUtil.textAppend('li', "synonymsList", value);
             })
         } else {
-            textAppend('li', "synonymsList", "No synonyms found!");
+            DomUtil.textAppend('li', "synonymsList", "No synonyms found!");
         }
 
     }
+}
+
+async function searchBtn()
+{
+    const getContent = new FetchApi();
+    const content = new CreateContent();
+    const word = document.getElementById("searchBar").value;
+
+    if(word === "") {
+        CreateContent.errorLog("", "You cannot search with empty inputs.");
+        return;
+    }
+    content.loading();
+    const result = await getContent.search(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`); 
+
+    
+    //Chama as funcões de criação do DOM
+    content.printQuery(result);
 }
 
 
