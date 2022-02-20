@@ -18,12 +18,13 @@ class DomUtil
     {
         let divName = document.createElement('div');
         divName.id = divId;
+        divName.className = "border p-3 my-3 mw-90"
         document.getElementById(appendTo).appendChild(divName);
     }
 
-    static textAppend(elementType, appendTo, text)
+    static textAppend(tagType, appendTo, text)
     {
-        let element = document.createElement(elementType);
+        let element = document.createElement(tagType);
         document.getElementById(appendTo).appendChild(element);
         element.appendChild(document.createTextNode(text));  
     }
@@ -56,7 +57,7 @@ class CreateContent
     {
         DomUtil.clearNodeChilds("wordResult");
         DomUtil.divCreator("errorDiv", "wordResult");
-        DomUtil.textAppend('p', 'wordResult', message + error);
+        DomUtil.textAppend('p', 'errorDiv', message + error);
     }
 
     printQuery(word)
@@ -85,42 +86,52 @@ class CreateContent
         //Create the word result main
         DomUtil.divCreator("wordResultPrincipal","wordResult");
         //Create searched word
-        DomUtil.textAppend('p',"wordResultPrincipal","Word: " + term.word);
+        DomUtil.textAppend('strong',"wordResultPrincipal","Word: ");
+        DomUtil.textAppend('span',"wordResultPrincipal",term.word);
+        DomUtil.textAppend('br',"wordResultPrincipal","");
         //Create the type of word
-        DomUtil.textAppend('p', 'wordResultPrincipal', "type: " + term.meanings[0].partOfSpeech);
+        DomUtil.textAppend('strong',"wordResultPrincipal","Type: ");
+        DomUtil.textAppend('span', 'wordResultPrincipal', term.meanings[0].partOfSpeech);
+        DomUtil.textAppend('br',"wordResultPrincipal","");
     }   
 
     createPhonetics(phonetics)
     {   
-        phonetics.forEach((value,index,array) => 
-        {
             //cria o texto de pronuncia
-            DomUtil.textAppend('span', "wordResultPrincipal", "Pronounce: " + array[index].text);
+            DomUtil.textAppend('strong', "wordResultPrincipal", "Pronounce: ");
+            DomUtil.textAppend('span', "wordResultPrincipal", phonetics[0].text);
 
             //cria a tag de imagem
-            let imageNode = document.createElement("img");
-            imageNode.src = "./icons/volume-up.svg";
+            let imageNode = document.createElement("i");
             imageNode.alt = "Hear the Pronounce";
+            imageNode.className = "bi-volume-up w-5 h-5"
+            imageNode.autofocus = false
         
             //cria o botão com imagem e audio
             let buttonNode = document.createElement("button");
             buttonNode.appendChild(imageNode);
+            buttonNode.className = "btn"
             buttonNode.onclick = function() {
-                DomUtil.playAudio(array[index].audio)
+                DomUtil.playAudio(phonetics[0].audio)
             };
             document.getElementById("wordResultPrincipal").appendChild(buttonNode);          
-        })
     }
 
     createWordMeanings(term)
     {
         DomUtil.divCreator("wordMeaning", "wordResult");
         //Create description text
-        DomUtil.textAppend('p', "wordMeaning", "Description: " + term.meanings[0].definitions[0].definition);
+        DomUtil.textAppend('strong', "wordMeaning", "Description: ");
+        DomUtil.textAppend('span', "wordMeaning", term.meanings[0].definitions[0].definition);
+        DomUtil.textAppend('br', "wordMeaning", "");
         //Create Origin text
-        DomUtil.textAppend('p','wordMeaning', "Origin: " + term.origin);
+        DomUtil.textAppend('strong', "wordMeaning", "Origin: ");
+        DomUtil.textAppend('span','wordMeaning', term.origin);
+        DomUtil.textAppend('br', "wordMeaning", "");
         //Create exemple text
-        DomUtil.textAppend('p','wordMeaning', "Exemple: " + term.meanings[0].definitions[0].example);
+        DomUtil.textAppend('strong', "wordMeaning","Exemple: ");
+        DomUtil.textAppend('span','wordMeaning', term.meanings[0].definitions[0].example);
+        DomUtil.textAppend('br', "wordMeaning", "");
     }
 
     createSynonyms(synonyms)
@@ -160,12 +171,3 @@ async function searchBtn()
     //Chama as funcões de criação do DOM
     content.printQuery(result);
 }
-
-
-
-
-
-
-
-
-
