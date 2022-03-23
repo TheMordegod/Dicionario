@@ -1,8 +1,0 @@
-.form-control:focus {   
-    box-shadow: none;
-    border-color: gray;
-}
-
-.btn:focus {
-    box-shadow: none;
-}
