@@ -1,0 +1,41 @@
+:root {
+    --MainColor: #00248B;
+    --Background: #dbdbdb;
+    --CardColor: white;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg-default{
+    background-color: var(--Background);
+}
+/*---Header---*/
+#search-bar:focus{
+    outline: black;
+    border: black;
+    box-shadow: none;
+}
+
+
+#searchBtn:focus{
+    outline: black;
+    border:black;
+    box-shadow: none;
+}
+
+.header-color{
+    background-color: var(--MainColor);
+}
+
+/*---Boxes---*/
+.audioBtn{
+    background-color: white;
+    border: none;
+}
+@media(min-width: 768px){
+    .search-input{
+        width: 50%;
+    }
+}

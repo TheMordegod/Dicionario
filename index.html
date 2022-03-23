@@ -1,55 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./icons/volume-up.svg">
-    <!-- Css Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--Icons Bootstrap-->
+    <!--Bootstrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+    <!--Bootstrap svgs-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="./style.css">
-    <title>Dicionary</title>
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;1,600&display=swap" rel="stylesheet">
+    <!--CSS-->
+    <link rel="stylesheet" href="./themes.css">
+    <title>Document</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
-    <header>
-        <div class="bg-primary bg-gradient p-3">
-            <p class="h1 text-white text-center">Dicionary Web APP</p>
-        </div>
-    </header>
-    <main>
-        <section class="container mt-2 ">
-            <div class="border p-4">
-                <h2 ></h2>
-                <div class="d-grid gap-3">
-                    <label for="searchBar" class="h2 text-center">Search for word</label>
-                    <input type="text" id="searchBar" placeholder="Exemple: Hello" class="form-control">
-                    <button onclick="searchBtn()" type="button" id="searchBtn" class="btn btn-primary">Search</button>
+<body class="bg-default">
+    <header class="text-light header-color">
+        <div class="container.fluid py-3 mx-5">
+            <div class="d-sm-flex justify-content-between align-items-center text-center">
+                <div class="p-2">
+                    <h1>Web Dicionary App</h1>
+                </div>
+                <div id="searchInput" class="d-flex input-group search-input">
+                    <input type="text" id="search-bar" class="form-control" placeholder="Search your word here...">
+                    <button id="searchBtn" onclick="searchBtn()" class="btn bg-light">Search</button>
                 </div>
             </div>
-        </section>
-        <section>
-            <div id="wordResult" class="container p-4">
+        </div>
+    </header>
+    <section>
+        <div id="firstCard" class="container text-center">
+            <div id="firstCardHeader" class="row bg-white border-bottom p-2 rounded mt-3">
+                <div id="wordName" class="fs-2 text-uppercase col">banana</div>
+                <div id="pronounce" class="col-md">
+                    <span class="fs-2">/bəˈnɑːnə/</span>
+                    <button class="audioBtn"><i class="bi bi-volume-up-fill h3"></i></button>
+                </div>
+                <div id="pronounce" class="col-md">
+                    <span class="fs-2">/bəˈnɑːnə/</span>
+                    <button class="audioBtn"><i class="bi bi-volume-up-fill h3"></i></button>
+                </div>
             </div>
-        </section>
-    </main>
-    <footer class="mt-auto">
-        <div class="bg-primary bg-gradient">
-            <small>
-                <p class="text-center text-white p-3 mb-0">Small app to pratice bootstrap 5, HTML, CSS and JS fetching
-                    data <br>
-                    All data come from: dictionaryapi.dev <br>
-                    02/2022
-                </p>
-            </small>
+        </div>
+        <div class="container mb-3">
+            <div id="wordCards" class="row">
+                <div id="definitions" class="col-md bg-white p-4 mt-3">
+                    <div id="type" class="text-center fs-2">
+                        <p>Noun</p>
+                    </div>
+                    <div id="definition" class="border-bottom mt-2">
+                        <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
+                            skin.</p>
+                    </div>
+                    <div id="definition" class="border-bottom mt-2">
+                        <p>The tropical tree-like plant which bears clusters of bananas. The plant, usually of the genus
+                            Musa but sometimes also including plants from Ensete, has large, elongated leaves and is related
+                            to the plantain.</p>
+                    </div>
+                    <div id="definition" class="border-bottom mt-2">
+                        <p>A yellow colour, like that of a banana's skin.</p>
+                    </div>
+                    <div id="definition" class="border-bottom mt-2">
+                        <p> (mildly) A person of Asian descent, especially a Chinese American, who has assimilated into
+                            Western
+                            culture or married a Caucasian (from the \"yellow\" outside and \"white\" inside). Compare
+                            coconut
+                            or Oreo.</p>
+                    </div>
+                </div>
+                <div id="definitions" class="col-md bg-white p-4 mt-3">
+                    <div id="type" class="fs-2 text-center">
+                        <p>Adjective</p>
+                    </div>
+                    <div id="definition" class="border-bottom mt-2">
+                        <p>Curved like a banana, especially of a ball in flight.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="header-color">
+        <div class="container text-white text-center fs-1 p-3">
+            <small><p>Mini Project made with &#10084;&#65039;</p>
+            <p>2022</p></small>
         </div>
     </footer>
-    <!--JS Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./script.js"></script>
+    <script type="module" src="Main.js"></script>
 </body>
 
 </html>
