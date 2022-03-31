@@ -17,29 +17,114 @@
     <!--Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;1,600&display=swap"
+        rel="stylesheet">
     <!--CSS-->
     <link rel="stylesheet" href="./themes.css">
     <title>Document</title>
 </head>
 
-<body class="bg-default">
+<body class="bg-default d-flex flex-column min-vh-100">
+    <!--Top Nav Bar-->
     <header class="text-light header-color">
-        <div class="container.fluid py-3 mx-5">
+        <div class="py-3 mx-5">
             <div class="d-sm-flex justify-content-between align-items-center text-center">
                 <div class="p-2">
                     <h1>Web Dicionary App</h1>
                 </div>
                 <div id="searchInput" class="d-flex input-group search-input">
-                    <input type="text" id="search-bar" class="form-control" placeholder="Search your word here...">
-                    <button id="searchBtn" onclick="searchBtn()" class="btn bg-light">Search</button>
+                    <input type="text" id="search-bar" class="form-control " placeholder="Search here...">
+                    <button id="searchBtn" class="btn bg-light btn-lg">Search</button>
                 </div>
             </div>
         </div>
     </header>
+    <!--Cards-->
     <section>
+        <div id='cardSection' class="">
+            <div id="firstCard" class="text-center"></div>
+        </div>
+        <div class="container" id="descriptionContainer">
+            <div id="descriptionCards" class="row"></div>
+        </div>
+    </section>
+    <footer class="header-color mt-auto">
+        <div class="container text-white text-center fs-1 p-3">
+            <small>
+                <p>Mini Project made with &#10084;&#65039;</p>
+                <p>2022</p>
+            </small>
+        </div>
+    </footer>
+    <script type="module" src="./Main.js"></script>
+</body>
+
+</html>
+
+<!--
+            <div class="container mb-3">
+            <div id="wordCards" class="row gx-md-5">
+                <div id="definitions" class="col-md">
+                    <div id="type" class="text-center fs-2 bg-white p-4 mt-3">
+                        <p>Noun</p>
+                    </div>
+                    <div id="definition" class="border-bottom bg-white p-4 ">
+                        <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
+                            skin.</p>
+                    </div>
+                    <div id="definition" class="border-bottom bg-white p-4 ">
+                        <p>The tropical tree-like plant which bears clusters of bananas. The plant, usually of the genus
+                            Musa but sometimes also including plants from Ensete, has large, elongated leaves and is
+                            related
+                            to the plantain.</p>
+                    </div>
+                    <div id="definition" class="border-bottom bg-white p-4 ">
+                        <p>A yellow colour, like that of a banana's skin.</p>
+                    </div>
+                    <div id="definition" class="border-bottom bg-white p-4 ">
+                        <p> (mildly) A person of Asian descent, especially a Chinese American, who has assimilated into
+                            Western
+                            culture or married a Caucasian (from the \"yellow\" outside and \"white\" inside). Compare
+                            coconut
+                            or Oreo.</p>
+                    </div>
+                </div>
+                <div id="definitions" class="col-md">
+                    <div id="type" class="fs-2 text-center bg-white p-4 mt-3">
+                        <p>Adjective</p>
+                    </div>
+                    <div id="definition" class="border-bottom bg-white p-4">
+                        <p>Curved like a banana, especially of a ball in flight.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container overflow-hidden">
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3 border bg-light">
+                        <div id="definition" class="border-bottom mt-2">
+                            <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
+                                skin.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-3 border bg-light">
+                        <div id="definition" class="border-bottom mt-2">
+                            <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
+                                skin.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section id="cardSection">
+        Main Card
         <div id="firstCard" class="container text-center">
-            <div id="firstCardHeader" class="row bg-white border-bottom p-2 rounded mt-3">
+           <div id="firstCardHeader" class="row bg-white border-bottom p-2 rounded mt-3">
                 <div id="wordName" class="fs-2 text-uppercase col">banana</div>
                 <div id="pronounce" class="col-md">
                     <span class="fs-2">/bəˈnɑːnə/</span>
@@ -51,6 +136,7 @@
                 </div>
             </div>
         </div>
+
         <div class="container mb-3">
             <div id="wordCards" class="row">
                 <div id="definitions" class="col-md bg-white p-4 mt-3">
@@ -63,7 +149,8 @@
                     </div>
                     <div id="definition" class="border-bottom mt-2">
                         <p>The tropical tree-like plant which bears clusters of bananas. The plant, usually of the genus
-                            Musa but sometimes also including plants from Ensete, has large, elongated leaves and is related
+                            Musa but sometimes also including plants from Ensete, has large, elongated leaves and is
+                            related
                             to the plantain.</p>
                     </div>
                     <div id="definition" class="border-bottom mt-2">
@@ -88,13 +175,4 @@
             </div>
         </div>
     </section>
-    <footer class="header-color">
-        <div class="container text-white text-center fs-1 p-3">
-            <small><p>Mini Project made with &#10084;&#65039;</p>
-            <p>2022</p></small>
-        </div>
-    </footer>
-    <script type="module" src="Main.js"></script>
-</body>
-
-</html>
+-->
