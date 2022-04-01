@@ -42,10 +42,12 @@ function createDescriptionCards(response) {
         appendTo: 'descriptionContainer'
     })
 
-    response.meanings.forEach((value, index) => {
+    response.meanings.forEach((definitionArray, index) => {  
+        let column = checkColumnNumber(response, index)
+        console.log(column)
         const definitions = new DomElement('div', {
             id: 'definitions' + index,
-            class: 'col-md-6 bg-white p-4 my-3',
+            class: column,
             appendTo: 'descriptionCards'
         })
         const wordTypeDiv = new DomElement('div', {
@@ -59,7 +61,7 @@ function createDescriptionCards(response) {
             appendTo: 'wordType' + index
         })
 
-        value.definitions.forEach((value,idx) => {           
+        definitionArray.definitions.forEach((definitionArray,idx) => {           
             const definition = new DomElement('div', {
                 id: 'definition' + index + idx,
                 class: 'border-bottom mt-2', 
@@ -71,13 +73,11 @@ function createDescriptionCards(response) {
                 class: '', 
                 appendTo: 'definition' + index + idx
             })
-            definitionText.insertTextToAnother(value.definition, 'definitionText' + index + idx)
+            definitionText.insertTextToAnother(definitionArray.definition, 'definitionText' + index + idx)
         })
        
-
         wordType.insertTextSelf(response.meanings[index].partOfSpeech)
     })
-
 }
 
 function createWordDiv(response) {
@@ -118,6 +118,19 @@ function createPhonetics(response) {
         }
     })
 }
+
+function checkColumnNumber(response, index)
+{
+    const oneColumn = 'col-md bg-white p-4 my-3';
+    const twoColumns = 'col-md-6 bg-white p-4 my-3';
+    const lastItem = response.meanings.length - 1;
+
+    if(lastItem == index){return oneColumn;}
+    if(response.meanings.length <= 1){return oneColumn;}
+    return twoColumns;
+   
+}
+
 
 document.getElementById("searchBtn").addEventListener('click', searchBtn);
 
