@@ -3,7 +3,7 @@
 Dicionario em inglês usando a API do dictionaryapi.
 
 Tecnologias usadas: 
--HTML
--CSS
--Javascript
--Bootstrap 5
+1. HTML
+2. CSS
+3. Javascript
+4. Bootstrap 5
