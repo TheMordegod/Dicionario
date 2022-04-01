@@ -12,16 +12,16 @@
     background-color: var(--Background);
 }
 /*---Header---*/
+
 #search-bar:focus{
-    outline: black;
-    border: black;
+    outline: none;
     box-shadow: none;
+    border: none;
 }
 
 
 #searchBtn:focus{
-    outline: black;
-    border:black;
+    outline: none;
     box-shadow: none;
 }
 
@@ -32,10 +32,13 @@
 /*---Boxes---*/
 .audioBtn{
     background-color: white;
-    border: none;
+    border: 2px solid black;
+    cursor: pointer;
+    padding: 0.2rem
 }
+
 @media(min-width: 768px){
     .search-input{
-        width: 50%;
+        width: 40%;
     }
 }
