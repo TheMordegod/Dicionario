@@ -1,6 +1,6 @@
-# Dicionario
+# Dicionário
 
-Dicionario em inglês usando a API do dictionaryapi.
+Dicionário em inglês usando a API do dictionaryapi.
 
 Tecnologias usadas: 
 1. HTML
