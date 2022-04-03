@@ -9,17 +9,19 @@ async function searchBtn() {
 }
 
 function createPageContent(response) {
-    createCardHeader(response)
-    createDescriptionCards(response)
+    cardHeader(response)
+    descriptionWrapper()
+    descriptionCards(response)
 }
 
-function createCardHeader(response) {
+//Functions to create the word header
+function cardHeader(response) {
     document.getElementById('firstCard').remove()
 
     const firstCard = new DomElement('div', {
         id: 'firstCard',
         class: 'container-fluid text-center',
-        appendTo: 'cardSection'
+        appendTo: 'firstCardSection'
     })
 
     const firstCardHeader = new DomElement('div', {
@@ -28,68 +30,20 @@ function createCardHeader(response) {
         appendTo: 'firstCard'
     })
 
-    createWordDiv(response)
-    createPhonetics(response)
+    headerTitle(response)
+    phonetics(response)
 }
 
-function createDescriptionCards(response) {
-
-    document.getElementById('descriptionCards').remove()
-
-    const wordCards = new DomElement('div', {
-        id: 'descriptionCards',
-        class: 'row justify-content-center',
-        appendTo: 'descriptionContainer'
-    })
-
-    response.meanings.forEach((definitionArray, index) => {  
-        let column = checkColumnNumber(response, index)
-        console.log(column)
-        const definitions = new DomElement('div', {
-            id: 'definitions' + index,
-            class: column,
-            appendTo: 'descriptionCards'
-        })
-        const wordTypeDiv = new DomElement('div', {
-            id: 'wordType' + index,
-            class: 'text-center fs-2',
-            appendTo: 'definitions' + index
-        })
-        const wordType = new DomElement('p', {
-            id: 'wordType' + index,
-            class: "",
-            appendTo: 'wordType' + index
-        })
-
-        definitionArray.definitions.forEach((definitionArray,idx) => {           
-            const definition = new DomElement('div', {
-                id: 'definition' + index + idx,
-                class: 'border-bottom mt-2', 
-                appendTo: 'definitions' + index
-            })
-    
-            const definitionText = new DomElement('p', {          
-                id: 'definitionText' + index + idx, 
-                class: '', 
-                appendTo: 'definition' + index + idx
-            })
-            definitionText.insertTextToAnother(definitionArray.definition, 'definitionText' + index + idx)
-        })
-       
-        wordType.insertTextSelf(response.meanings[index].partOfSpeech)
-    })
-}
-
-function createWordDiv(response) {
-    const wordName = new DomElement('div', {
+function headerTitle(response) {
+    const HeaderTitle = new DomElement('div', {
         id: 'wordName',
         class: 'fs-2 text-uppercase col',
         appendTo: 'firstCardHeader'
     })
-    wordName.insertTextSelf(response.word)
+    HeaderTitle.insertTextSelf(response.word)
 }
 
-function createPhonetics(response) {
+function phonetics(response) {
     response.phonetics.forEach((value, index) => {
         if (response.phonetics[index].audio !== '' && response.phonetics[index].hasOwnProperty('text')) {
             const pronounce = new DomElement('div', {
@@ -119,17 +73,78 @@ function createPhonetics(response) {
     })
 }
 
-function checkColumnNumber(response, index)
-{
-    const oneColumn = 'col-md bg-white p-4 my-3';
-    const twoColumns = 'col-md-6 bg-white p-4 my-3';
-    const lastItem = response.meanings.length - 1;
+//Function to create card wrapper
+function descriptionWrapper() {
 
-    if(lastItem == index){return oneColumn;}
+    document.getElementById('descriptionWrapper').remove()
+
+    const wordCards = new DomElement('div', {
+        id: 'descriptionWrapper',
+        class: 'row justify-content-center',
+        appendTo: 'descriptionSection'
+    })
+
+}
+
+//Functions to create card's description
+function descriptionCards(response) 
+{   
+    /* 
+    descriptionTitle(response)
+    descriptionText(response)*/
+    response.meanings.forEach((definitionArray, index) => {  
+        let column = defineNumberOfColumns(response, index)
+        const definitions = new DomElement('div', {
+            id: 'definitionsCard' + index,
+            class: column,
+            appendTo: 'descriptionWrapper'
+        })
+        const wordTypeDiv = new DomElement('div', {
+            id: 'wordType' + index,
+            class: 'text-center fs-2',
+            appendTo: 'definitionsCard' + index
+        })
+        const wordType = new DomElement('p', {
+            id: 'wordType' + index,
+            class: "",
+            appendTo: 'wordType' + index
+        })
+    
+        definitionArray.definitions.forEach((definitionArray,idx) => {           
+            const definition = new DomElement('div', {
+                id: 'definition' + index + idx,
+                class: 'border-bottom mt-2', 
+                appendTo: 'definitionsCard' + index
+            })
+    
+            const definitionText = new DomElement('p', {          
+                id: 'definitionText' + index + idx, 
+                class: '', 
+                appendTo: 'definition' + index + idx
+            })
+
+            let text = document.createTextNode(definitionArray.definition);
+            document.getElementById('definitionText' + index + idx).appendChild(text); 
+        })
+       
+        wordType.insertTextSelf(response.meanings[index].partOfSpeech)
+    })
+}
+
+
+
+function defineNumberOfColumns(response, actualIndex)
+{
+    const oneColumn = 'col-md bg-white p-4 my-3 rounded';
+    const twoColumns = 'col-md-6 bg-white p-4 my-3 rounded';
+    const lastIndex = response.meanings.length - 1;
+
+    if(lastIndex == actualIndex){return oneColumn;}
     if(response.meanings.length <= 1){return oneColumn;}
     return twoColumns;
    
 }
+
 
 
 document.getElementById("searchBtn").addEventListener('click', searchBtn);
