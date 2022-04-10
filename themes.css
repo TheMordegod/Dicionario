@@ -25,11 +25,11 @@
     box-shadow: none;
 }
 
-.btn{
+#searchBtn{
     background-color:#e2e2e2;
 }
 
-.btn:hover{
+#searchBtn:hover{
     background-color:#b8b8b8;
 }
 
@@ -44,6 +44,37 @@
     cursor: pointer;
     margin: 0 1rem;
     padding: 0.2rem
+}
+
+/*--Accordion--*/
+.accordion.active .accordionText{
+    display: block;
+    background-color: #f3f3f3;
+}
+
+.accordion.active .accordionLabel::before{
+    position: relative; 
+    content: '-';
+    left: 95%;
+}
+
+.accordionLabel {
+    cursor: pointer;
+    background-color: #f3f3f3;
+}
+
+.accordionLabel:hover {
+    background-color: #d6d6d6;
+}
+
+.accordionLabel::before {  
+    position: relative; 
+    content: '+';
+    left: 95%;
+}
+
+.accordion .accordionText {
+    display: none;
 }
 
 @media(min-width: 768px){

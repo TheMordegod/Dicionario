@@ -21,21 +21,27 @@
         rel="stylesheet">
     <!--CSS-->
     <link rel="stylesheet" href="./themes.css">
-    <title>Document</title>
+    <!--FavIcon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+    <link rel="manifest" href="./favicon/site.webmanifest">
+    <title>Web Dicionary App</title>
 </head>
-
 <body class="bg-default d-flex flex-column min-vh-100">
     <!--Top Nav Bar-->
     <header class="text-light header-color">
         <div class="py-3 mx-5">
             <div class="d-sm-flex justify-content-between align-items-center text-center">
                 <div class="p-2">
-                   <a href="#" class="link-primary text-white text-decoration-none"><h1>Web Dicionary App</h1></a> 
+                    <a href="#" class="link-primary text-white text-decoration-none">
+                        <h1>Web Dicionary App</h1>
+                    </a>
                 </div>
-                <div id="searchInput" class="d-flex input-group search-input">
-                    <input type="text" id="search-bar" class="form-control " placeholder="Search here...">
-                    <button id="searchBtn" class="btn  btn-lg">Search</button>
-                </div>
+                    <div id="searchInput" class="d-flex input-group search-input">
+                        <input type="text" id="search-bar" class="form-control " placeholder="Search here...">
+                        <button id="searchBtn" type='submit' class="btn btn-lg">Search</button>
+                    </div>
             </div>
         </div>
     </header>
@@ -48,131 +54,13 @@
             <div id="descriptionWrapper" class="row"></div>
         </div>
     </section>
+    <!--Footer-->
     <footer class="header-color mt-auto">
-        <div class="container text-white text-center fs-1 p-3">
-            <small>
-                <p>Mini Project made with &#10084;&#65039;</p>
-                <p>2022</p>
-            </small>
+        <div class="container text-white text-center p-3">
+            <p>Mini Project made with &#10084;&#65039;</p>
+            <p>2022</p>
         </div>
     </footer>
     <script type="module" src="./Main.js"></script>
-
 </body>
 </html>
-
-<!--
-            <div class="container mb-3">
-            <div id="wordCards" class="row gx-md-5">
-                <div id="definitions" class="col-md">
-                    <div id="type" class="text-center fs-2 bg-white p-4 mt-3">
-                        <p>Noun</p>
-                    </div>
-                    <div id="definition" class="border-bottom bg-white p-4 ">
-                        <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
-                            skin.</p>
-                    </div>
-                    <div id="definition" class="border-bottom bg-white p-4 ">
-                        <p>The tropical tree-like plant which bears clusters of bananas. The plant, usually of the genus
-                            Musa but sometimes also including plants from Ensete, has large, elongated leaves and is
-                            related
-                            to the plantain.</p>
-                    </div>
-                    <div id="definition" class="border-bottom bg-white p-4 ">
-                        <p>A yellow colour, like that of a banana's skin.</p>
-                    </div>
-                    <div id="definition" class="border-bottom bg-white p-4 ">
-                        <p> (mildly) A person of Asian descent, especially a Chinese American, who has assimilated into
-                            Western
-                            culture or married a Caucasian (from the \"yellow\" outside and \"white\" inside). Compare
-                            coconut
-                            or Oreo.</p>
-                    </div>
-                </div>
-                <div id="definitions" class="col-md">
-                    <div id="type" class="fs-2 text-center bg-white p-4 mt-3">
-                        <p>Adjective</p>
-                    </div>
-                    <div id="definition" class="border-bottom bg-white p-4">
-                        <p>Curved like a banana, especially of a ball in flight.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container overflow-hidden">
-            <div class="row gx-5">
-                <div class="col">
-                    <div class="p-3 border bg-light">
-                        <div id="definition" class="border-bottom mt-2">
-                            <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
-                                skin.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light">
-                        <div id="definition" class="border-bottom mt-2">
-                            <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
-                                skin.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <section id="cardSection">
-        Main Card
-        <div id="firstCard" class="container text-center">
-           <div id="firstCardHeader" class="row bg-white border-bottom p-2 rounded mt-3">
-                <div id="wordName" class="fs-2 text-uppercase col">banana</div>
-                <div id="pronounce" class="col-md">
-                    <span class="fs-2">/bəˈnɑːnə/</span>
-                    <button class="audioBtn"><i class="bi bi-volume-up-fill h3"></i></button>
-                </div>
-                <div id="pronounce" class="col-md">
-                    <span class="fs-2">/bəˈnɑːnə/</span>
-                    <button class="audioBtn"><i class="bi bi-volume-up-fill h3"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <div class="container mb-3">
-            <div id="wordCards" class="row">
-                <div id="definitions" class="col-md bg-white p-4 mt-3">
-                    <div id="type" class="text-center fs-2">
-                        <p>Noun</p>
-                    </div>
-                    <div id="definition" class="border-bottom mt-2">
-                        <p>An elongated curved tropical fruit that grows in bunches and has a creamy flesh and a smooth
-                            skin.</p>
-                    </div>
-                    <div id="definition" class="border-bottom mt-2">
-                        <p>The tropical tree-like plant which bears clusters of bananas. The plant, usually of the genus
-                            Musa but sometimes also including plants from Ensete, has large, elongated leaves and is
-                            related
-                            to the plantain.</p>
-                    </div>
-                    <div id="definition" class="border-bottom mt-2">
-                        <p>A yellow colour, like that of a banana's skin.</p>
-                    </div>
-                    <div id="definition" class="border-bottom mt-2">
-                        <p> (mildly) A person of Asian descent, especially a Chinese American, who has assimilated into
-                            Western
-                            culture or married a Caucasian (from the \"yellow\" outside and \"white\" inside). Compare
-                            coconut
-                            or Oreo.</p>
-                    </div>
-                </div>
-                <div id="definitions" class="col-md bg-white p-4 mt-3">
-                    <div id="type" class="fs-2 text-center">
-                        <p>Adjective</p>
-                    </div>
-                    <div id="definition" class="border-bottom mt-2">
-                        <p>Curved like a banana, especially of a ball in flight.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
--->

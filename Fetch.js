@@ -1,12 +1,11 @@
 export async function FetchWord(link)
 {
-    try{
+   try{
         const response = await fetch(link);
         const arrayResponse = await response.json();
-        const objectsFromResponse = arrayResponse[0]
-        return objectsFromResponse;
+        return arrayResponse;
     }
-    catch(e){
-        console.log(e)
+    catch(error) {
+        console.log(error);
     }
 }

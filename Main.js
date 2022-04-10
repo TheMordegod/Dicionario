@@ -1,17 +1,30 @@
 import { FetchWord } from "./Fetch.js";
 import { DomElement } from "./DomElement.js";
+document.getElementById("searchBtn").addEventListener('click', searchBtn);
 
-async function searchBtn() {
+function searchBtn() {
     let inputValue = document.getElementById('search-bar').value;
+    if(inputValue === "") {
+        return alert('You cannot search empty inputs!'); 
+    } 
+    fetchData(inputValue)
+}
+
+async function fetchData(inputValue) {
     let response = await FetchWord(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`);
-    console.log(response)
-    createPageContent(response)
+    if(response.hasOwnProperty('title')){
+        console.log('Sorry BRO')
+    }
+    else{
+        createPageContent(response[0]) 
+    }    
 }
 
 function createPageContent(response) {
     cardHeader(response)
     descriptionWrapper()
     descriptionCards(response)
+    accordionsExemples(response)
 }
 
 //Functions to create the word header
@@ -23,7 +36,6 @@ function cardHeader(response) {
         class: 'container-fluid text-center',
         appendTo: 'firstCardSection'
     })
-
     const firstCardHeader = new DomElement('div', {
         id: 'firstCardHeader',
         class: 'row bg-white border-bottom p-4 rounded mt-3',
@@ -75,7 +87,6 @@ function phonetics(response) {
 
 //Function to create card wrapper
 function descriptionWrapper() {
-
     document.getElementById('descriptionWrapper').remove()
 
     const wordCards = new DomElement('div', {
@@ -83,71 +94,119 @@ function descriptionWrapper() {
         class: 'row justify-content-center',
         appendTo: 'descriptionSection'
     })
-
 }
 
-//Functions to create card's description
-function descriptionCards(response) 
-{   
-    /* 
-    descriptionTitle(response)
-    descriptionText(response)*/
-    response.meanings.forEach((definitionArray, index) => {  
-        let column = defineNumberOfColumns(response, index)
-        const definitions = new DomElement('div', {
-            id: 'definitionsCard' + index,
-            class: column,
-            appendTo: 'descriptionWrapper'
-        })
-        const wordTypeDiv = new DomElement('div', {
-            id: 'wordType' + index,
-            class: 'text-center fs-2',
-            appendTo: 'definitionsCard' + index
-        })
-        const wordType = new DomElement('p', {
-            id: 'wordType' + index,
-            class: "",
-            appendTo: 'wordType' + index
-        })
-    
-        definitionArray.definitions.forEach((definitionArray,idx) => {           
-            const definition = new DomElement('div', {
-                id: 'definition' + index + idx,
-                class: 'border-bottom mt-2', 
-                appendTo: 'definitionsCard' + index
-            })
-    
-            const definitionText = new DomElement('p', {          
-                id: 'definitionText' + index + idx, 
-                class: '', 
-                appendTo: 'definition' + index + idx
-            })
+//Functions to create description cards 
+function descriptionCards(response) {
+    response.meanings.forEach((definitionArray, cardId) => {
+        descriptionTitle(response, cardId);
 
-            let text = document.createTextNode(definitionArray.definition);
-            document.getElementById('definitionText' + index + idx).appendChild(text); 
+        definitionArray.definitions.forEach((definitionArray, definitionId) => {
+            descriptionText(definitionArray, cardId, definitionId);
+            accordionsExemples(definitionArray,cardId,definitionId);
         })
-       
-        wordType.insertTextSelf(response.meanings[index].partOfSpeech)
     })
+    accordionClickLogic()   
 }
 
+function descriptionTitle(response, cardId) {
+    let column = defineNumberOfColumns(response, cardId)
 
+    const definitions = new DomElement('div', {
+        id: 'definitionsCard' + cardId,
+        class: column,
+        appendTo: 'descriptionWrapper'
+    })
+    const wordTypeDiv = new DomElement('div', {
+        id: 'wordType' + cardId,
+        class: 'text-center fs-2',
+        appendTo: 'definitionsCard' + cardId
+    })
+    const wordType = new DomElement('p', {
+        id: 'wordTypeText' + cardId,
+        class: "",
+        appendTo: 'wordType' + cardId
+    })
 
-function defineNumberOfColumns(response, actualIndex)
-{
-    const oneColumn = 'col-md bg-white p-4 my-3 rounded';
-    const twoColumns = 'col-md-6 bg-white p-4 my-3 rounded';
+    wordType.insertTextSelf(response.meanings[cardId].partOfSpeech)
+}
+
+function descriptionText(definitionArray, cardId, definitionId) {
+    const definition = new DomElement('div', {
+        id: 'definition' + cardId + definitionId,
+        class: 'border-bottom mt-2',
+        appendTo: 'definitionsCard' + cardId
+    })
+
+    const definitionText = new DomElement('p', {
+        id: 'definitionText' + cardId + definitionId,
+        class: '',
+        appendTo: 'definition' + cardId + definitionId
+    })
+
+    let text = document.createTextNode(definitionArray.definition);
+    document.getElementById('definitionText' + cardId + definitionId).appendChild(text);
+}
+
+function defineNumberOfColumns(response, actualIndex) {
+    const oneColumn = 'col-md bg-white p-4 my-3';
+    const twoColumns = 'col-md-6 bg-white p-4 my-3';
     const lastIndex = response.meanings.length - 1;
 
-    if(lastIndex == actualIndex){return oneColumn;}
-    if(response.meanings.length <= 1){return oneColumn;}
+    if (lastIndex == actualIndex) { return oneColumn; }
+    if (response.meanings.length <= 1) { return oneColumn; }
     return twoColumns;
-   
+}
+
+//Accordion functions
+function accordionsExemples(definitionArray,cardId,definitionId) {
+    if(!definitionArray.example) {return;} 
+
+    const accordionDiv = new DomElement('div', {
+        id: 'accordionDiv' + cardId + definitionId,
+        class: 'accordion container bg-white',
+        appendTo: 'definitionText' + cardId + definitionId
+    })
+    const accordionLabel = new DomElement('div', {
+        id: 'accordionLabel' + cardId + definitionId,
+        class: 'accordionLabel d-flex mt-2 pt-2',
+        appendTo: 'accordionDiv' + cardId + definitionId
+    })
+    const accordionParagraph = new DomElement('p', {
+        id: 'accordionParagraph' + cardId + definitionId,
+        class: 'fw-bold d-flex',
+        appendTo: 'accordionLabel' + cardId + definitionId
+    })
+    const accordionText = new DomElement('div', {
+        id: 'accordionText' + cardId + definitionId,
+        class: 'accordionText p-2',
+        appendTo: 'accordionDiv' + cardId + definitionId
+    })
+
+    accordionParagraph.insertTextSelf('Example')
+
+    let text = document.createTextNode(definitionArray.example);
+    document.getElementById('accordionText' + cardId + definitionId).appendChild(text);
+}
+
+function accordionClickLogic(){
+    const accordion = document.getElementsByClassName('accordion')
+
+    for(let i = 0; i < accordion.length; i++) {
+    accordion[i].addEventListener('click', event => {
+        if(event.target.classList[0] === 'accordionLabel') {
+            accordion[i].classList.toggle('active')
+        }      
+    })  
+    }
 }
 
 
 
-document.getElementById("searchBtn").addEventListener('click', searchBtn);
+
+
+
+
 
 
 
