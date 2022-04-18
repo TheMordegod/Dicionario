@@ -1,30 +1,47 @@
 import { FetchWord } from "./Fetch.js";
 import { DomElement } from "./DomElement.js";
-document.getElementById("searchBtn").addEventListener('click', searchBtn);
+import { accordionClickLogic } from "./AccordionLogic.js";
 
-function searchBtn() {
+//Event listeners
+const searchButton = document.getElementById("searchBtn");
+const searchBar = document.getElementById("search-bar");
+
+searchButton.addEventListener('click', checkInputValue);
+searchBar.addEventListener("keyup", function (event) {
+    if (event.code === 'Enter') {
+        checkInputValue();
+        event.preventDefault();
+    }
+
+})
+
+function checkInputValue() {
     let inputValue = document.getElementById('search-bar').value;
-    if(inputValue === "") {
-        return alert('You cannot search empty inputs!'); 
-    } 
-    fetchData(inputValue)
+    if (inputValue === "") {
+        errorModal('Empty Search!','You cannot search empty values!');
+        return;
+    }
+    fetchData(inputValue);
 }
 
+//Get Data from api
 async function fetchData(inputValue) {
     let response = await FetchWord(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`);
-    if(response.hasOwnProperty('title')){
-        console.log('Sorry BRO')
+
+    if (response.hasOwnProperty('title')) { 
+        errorModal('Word not Found!', response['message']);
+        return;
     }
-    else{
-        createPageContent(response[0]) 
-    }    
+    createPageContent(response[0])
 }
 
+//Create contents
 function createPageContent(response) {
     cardHeader(response)
     descriptionWrapper()
     descriptionCards(response)
     accordionsExemples(response)
+    accordionClickLogic()
 }
 
 //Functions to create the word header
@@ -85,7 +102,7 @@ function phonetics(response) {
     })
 }
 
-//Function to create card wrapper
+//Functions to create description cards 
 function descriptionWrapper() {
     document.getElementById('descriptionWrapper').remove()
 
@@ -96,17 +113,15 @@ function descriptionWrapper() {
     })
 }
 
-//Functions to create description cards 
 function descriptionCards(response) {
     response.meanings.forEach((definitionArray, cardId) => {
         descriptionTitle(response, cardId);
 
         definitionArray.definitions.forEach((definitionArray, definitionId) => {
             descriptionText(definitionArray, cardId, definitionId);
-            accordionsExemples(definitionArray,cardId,definitionId);
+            accordionsExemples(definitionArray, cardId, definitionId);
         })
     })
-    accordionClickLogic()   
 }
 
 function descriptionTitle(response, cardId) {
@@ -151,16 +166,16 @@ function descriptionText(definitionArray, cardId, definitionId) {
 function defineNumberOfColumns(response, actualIndex) {
     const oneColumn = 'col-md bg-white p-4 my-3';
     const twoColumns = 'col-md-6 bg-white p-4 my-3';
-    const lastIndex = response.meanings.length - 1;
+    const lastIndex = response.meanings.length - 1; // remove the default prototype array
 
     if (lastIndex == actualIndex) { return oneColumn; }
     if (response.meanings.length <= 1) { return oneColumn; }
     return twoColumns;
 }
 
-//Accordion functions
-function accordionsExemples(definitionArray,cardId,definitionId) {
-    if(!definitionArray.example) {return;} 
+//Accordion function
+function accordionsExemples(definitionArray, cardId, definitionId) {
+    if (!definitionArray.example) { return; }
 
     const accordionDiv = new DomElement('div', {
         id: 'accordionDiv' + cardId + definitionId,
@@ -189,17 +204,17 @@ function accordionsExemples(definitionArray,cardId,definitionId) {
     document.getElementById('accordionText' + cardId + definitionId).appendChild(text);
 }
 
-function accordionClickLogic(){
-    const accordion = document.getElementsByClassName('accordion')
-
-    for(let i = 0; i < accordion.length; i++) {
-    accordion[i].addEventListener('click', event => {
-        if(event.target.classList[0] === 'accordionLabel') {
-            accordion[i].classList.toggle('active')
-        }      
-    })  
-    }
+// Error Screen Modal
+function errorModal(title, text) {
+    var myModal = new bootstrap.Modal(document.getElementById('errorModal'), {});
+    document.getElementById('errorModalLabel').innerHTML = title;
+    document.getElementById('modalText').innerHTML = text;
+    myModal.show();
 }
+
+
+
+
 
 
 
