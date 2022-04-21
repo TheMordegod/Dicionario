@@ -1,6 +1,6 @@
-import { FetchWord } from "./Fetch.js";
-import { DomElement } from "./DomElement.js";
-import { accordionClickLogic } from "./AccordionLogic.js";
+import { FetchWord } from "/src/scripts/Fetch.js";
+import { DomElement } from "/src/scripts/DomElement.js";
+import { accordionClickLogic } from "/src/scripts/AccordionLogic.js";
 
 //Event listeners
 const searchButton = document.getElementById("searchBtn");
