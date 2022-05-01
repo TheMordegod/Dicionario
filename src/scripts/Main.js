@@ -1,6 +1,7 @@
 import { FetchWord } from "/src/scripts/Fetch.js";
 import { DomElement } from "/src/scripts/DomElement.js";
 import { accordionClickLogic } from "/src/scripts/AccordionLogic.js";
+import css from "../styles/style.css"
 
 //Event listeners
 const searchButton = document.getElementById("searchBtn");
