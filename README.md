@@ -7,3 +7,4 @@ Tecnologias usadas:
 2. CSS
 3. Javascript
 4. Bootstrap 5
+5. Webpack
