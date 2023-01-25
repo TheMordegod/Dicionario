@@ -9,4 +9,4 @@ Tecnologias usadas:
 4. Bootstrap 5
 5. Webpack
 
-Link para o site: https://themordegod.github.io/dictionary/
+Link para o site: https://themordegod.github.io/Dictionary/
